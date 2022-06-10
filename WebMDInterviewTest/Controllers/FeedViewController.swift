@@ -18,9 +18,40 @@ class FeedViewController: UIViewController {
             
      */
 
+    
+    final var finalItems: [FeedItem] = []
+
+    
+    func initList(){
+        //* Load the feed items using the FeedProvider
+        finalItems = FeedProvider.getFeedItems()
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return finalItems.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let tableViewCell = tableView.dequeueReusableCell(withIdentifier: "tableCellId") as! TableViewCell
+        
+        let thisItem = finalItems[indexPath.row]
+        
+        tableViewCell.shapeTitle.text = thisItem.title
+        
+        tableViewCell.shapeDescription.text = thisItem.description
+        
+        tableViewCell.shapeImage.text = thisItem.image_url
+        
+        return tableViewCell
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        initList()
+        view.backgroundColor = .systemPink
     }
 }
 
